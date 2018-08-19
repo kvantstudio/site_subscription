@@ -1,0 +1,15 @@
+site_subscription.form:
+  path: '/subscription'
+  defaults:
+    _title: 'Subscription'    
+    _form: '\Drupal\site_subscription\Form\SubscriptionForm'
+  requirements:
+    _permission: 'access content'
+
+site_subscription.admin:
+  path: '/admin/config/kvantstudio/subscription'
+  defaults:
+    _title: 'Subscription settings'
+    _form: '\Drupal\site_subscription\Form\SubscriptionSettingsForm'            
+  requirements:
+    _permission: 'access administration pages'  

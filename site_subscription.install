@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * @file
+ * Install file for the site_subscription.module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function site_subscription_schema() {
+  $schema['site_subscription'] = array(
+    'description' => 'Таблица для хранения пользователей и их подписки.',
+    'fields' => array(
+      'uid' => array(
+        'description' => 'UID идентификатор пользователя.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'type' => array(
+        'description' => 'Тип элемента для подписки.',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => 'all',
+      ),
+      'type_id' => array(
+        'description' => 'Идентификатор элемента для подписки.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),      
+      'mail' => array(
+        'description' => 'E-mail пользователя.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'created' => array(
+        'description' => 'Дата создания.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),    
+    'unique keys' => array(
+      'uid' => array('uid'),
+    ),
+    'foreign keys' => array(
+      'users' => array(
+        'table' => 'users',
+        'columns' => array('uid' => 'uid'),
+      ),
+    ),    
+  );
+  
+  return $schema;
+}

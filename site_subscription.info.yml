@@ -1,0 +1,11 @@
+name: Subscription
+description: 'Module to create a subscription to materials for Drupal 8.'
+package: Kvantstudio
+hidden: TRUE
+type: module
+core: '8.x'
+version: '1.0.0-alpha.1'
+dependencies:
+ - kvantstudio
+interface translation project: site_subscription
+interface translation server pattern: modules/custom/site_subscription/translations/%project.%language.po

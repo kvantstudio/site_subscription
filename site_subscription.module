@@ -1,0 +1,33 @@
+<?php
+
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_cron().
+ */
+function site_subscription_cron() {
+    $connection = \Drupal::database();
+    $config = \Drupal::config('site_subscription.settings');
+    $number = $config->get('number');
+
+    // Считывает значение из системной конфигурации.
+    $site_subscription_count = \Drupal::state()->get('site_subscription_count');
+    if (!$site_subscription_count) {
+        $site_subscription_count = 0;
+    }
+
+    // Перечень подписок для обработки.
+    $query = $connection->select('site_subscription', 'n');
+    $query->fields('n');
+    $query->range($site_subscription_count, $number);
+    $result = $query->execute();
+
+    foreach ($result as $row) {
+        $mail = $row->mail;
+        \Drupal::logger('site_subscription')->notice($mail);
+    }
+
+    // Сохраняет значение в системную конфигурацию.
+    $site_subscription_count = $site_subscription_count + $number;
+    \Drupal::state()->set('site_subscription_count', $site_subscription_count);
+}
